@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="TestSkin.View.UserControl.CircularProgressBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestSkin.View.UserControl"
+             xmlns:ccontrols="http://schemas.microsoft.com/expression/2010/drawing"
+             mc:Ignorable="d"  x:Name="circularProgressBar"
+             d:DesignHeight="50" d:DesignWidth="50">
+    <UserControl.Resources>
+        <local:ValueToAngleConverter x:Key="ValueToAngleConverter"/>
+        <local:ValueToTextConverter x:Key="ValueToTextConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <!--<ProgressBar Background/>-->
+        <ccontrols:Arc ArcThickness="{Binding ElementName=circularProgressBar, Path=ArcThickness}" EndAngle="360" Stretch="None" Fill="{Binding ElementName=circularProgressBar, Path=BackgroundBrush}"/>
+        <Label Content="{Binding Converter={StaticResource ValueToTextConverter}, ElementName=circularProgressBar, Path=Value}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding ElementName=circularProgressBar, Path=PFontColor}" FontWeight="{Binding ElementName=circularProgressBar, Path=PFontWeight}"/>
+        <ccontrols:Arc ArcThickness="{Binding ElementName=circularProgressBar, Path=ArcThickness}" 
+                       EndAngle="{Binding Converter={StaticResource ValueToAngleConverter}, ElementName=circularProgressBar, Path=Value}"
+                       Stretch="None" Fill="{Binding ElementName=circularProgressBar, Path=IndicatorBrush}"/>
+    </Grid>
+</UserControl>

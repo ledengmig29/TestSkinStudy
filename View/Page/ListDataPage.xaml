@@ -1,0 +1,79 @@
+﻿<Page x:Class="ListViewData.View.Page.ListDataPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ListViewData.View.Page"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1500"
+      Title="ListDataPage">
+    <Page.Resources>
+        <DataTemplate x:Key="DiagDataTemplate">
+            <Grid Tag="{Binding Pdfurl}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="176*" />
+                    <ColumnDefinition Width="117*" />
+                    <ColumnDefinition Width="59*" />
+                    <ColumnDefinition Width="176*" />
+                    <ColumnDefinition Width="106*" />
+                    <ColumnDefinition Width="70*" />
+                    <ColumnDefinition Width="59*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="textBlock"
+                           Text="{Binding RealName}"  Grid.Column="0"    />
+                <TextBlock x:Name="textBlock1"
+                           Text="{Binding DepartName}"  Grid.Column="1"   />
+                <TextBlock x:Name="textBlock2"
+                           Text="{Binding MainInfo}"  Grid.Column="2"   />
+                <TextBlock x:Name="textBlock3"
+                           Text="{Binding Phone}"  Grid.Column="3"   />
+                <TextBlock x:Name="textBlock4"
+                           Text="{Binding Sex}" Grid.Column="4"   />
+                <TextBlock x:Name="textBlock5"
+                           Text="{Binding Status}" Grid.Column="5"   />
+                <TextBlock x:Name="textBlock6"
+                           Text="{Binding PdfDate}"
+                           Grid.Column="6"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        
+        <Border Background="#4A708B" CornerRadius="10 10 0 0">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Left">
+                <TextBlock Text="ListViewData" Margin="10 0 0 0" Foreground="White"/>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1" Background="#4a708b">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="176*" />
+                <ColumnDefinition Width="117*" />
+                <ColumnDefinition Width="59*" />
+                <ColumnDefinition Width="176*" />
+                <ColumnDefinition Width="106*" />
+                <ColumnDefinition Width="70*" />
+                <ColumnDefinition Width="59*" />
+                <ColumnDefinition Width="117*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="textBlock10" Text="姓名"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"     />
+            <TextBlock x:Name="textBlock11" Text="科室"  Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Center"    />
+            <TextBlock x:Name="textBlock12" Text="主诉信息"  Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="textBlock13" Text="手机号"  Grid.Column="3"  VerticalAlignment="Center" HorizontalAlignment="Center"  />
+            <TextBlock x:Name="textBlock14" Text="性别" Grid.Column="4"      VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="textBlock15" Text="审核状态" Grid.Column="5"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock x:Name="textBlock16" Text="日期" Grid.Column="6"     VerticalAlignment="Center" HorizontalAlignment="Center"  />
+            <TextBlock x:Name="textBlock17" Text="云端报告" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center"  />
+        </Grid>
+        <ListView Grid.Row="2" ItemTemplate="{StaticResource DiagDataTemplate}" ItemsSource="{Binding CloudPatients}" HorizontalAlignment="Stretch" Margin="0,0,0,-597">
+
+        </ListView>
+    </Grid>
+</Page>

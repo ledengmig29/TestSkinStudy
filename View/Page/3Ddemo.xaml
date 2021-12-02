@@ -1,0 +1,92 @@
+﻿<Page x:Class="TestSkin.View.Page._3Ddemo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TestSkin.View.Page"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="_3Ddemo">
+
+    <Page xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+        xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>
+
+        <Page.Resources>
+            <!-- 物体模型、材质的定义在Resources中，类似于模板，不会显示到屏幕上 -->
+            <!-- 金字塔几何体模型定义 Positions为顶点坐标，TriangleIndices为三角形网格的顶点索引 -->
+            <MeshGeometry3D x:Key="RSRCmeshPyramid"
+                            Positions="0,75,0 -50,0,50 50,0,50 0,75,0 50,0,50 50,0,-50 0,75,0 50,0,-50 -50,0,-50 0,75,0 -50,0,-50 -50,0,50"
+                            TriangleIndices="0 1 2 3 4 5 6 7 8 9 10 11">
+            </MeshGeometry3D>
+            <!-- 物体正面材质，使用简单的黄色 -->
+            <DiffuseMaterial x:Key="RSRCmaterialFront" Brush="Yellow"></DiffuseMaterial>
+
+            <!--定义一个动画模板，沿y轴旋转360°-->
+            <Storyboard x:Key='TurntableStoryboard'>
+                <ParallelTimeline RepeatBehavior='Forever'>
+                    <DoubleAnimation From='0'
+                         To='360'
+                         Storyboard.TargetName='yAxisRotate'
+                         Storyboard.TargetProperty='Angle'
+                         Duration='0:0:4'/>
+                </ParallelTimeline>
+            </Storyboard>
+        </Page.Resources>
+        <Page.Triggers>
+            <!--鼠标进入触发动画-->
+            <EventTrigger RoutedEvent='Mouse.MouseEnter'>
+                <BeginStoryboard x:Name='StartTurntable' Storyboard='{StaticResource TurntableStoryboard}'></BeginStoryboard>
+            </EventTrigger>
+            <!--鼠标进入停止动画-->
+            <EventTrigger RoutedEvent='Mouse.MouseLeave'>
+                <StopStoryboard BeginStoryboardName='StartTurntable'/>
+            </EventTrigger>
+        </Page.Triggers>
+        <Viewport3D Width="640" Height="480">
+            <!-- Viewport3D类似与2D中的canvas画布，为3D场景的显示提供绘制区域 
+               照相机、物体、光源在这里设置
+            -->
+            <Viewport3D.Camera>
+                <!-- 照相机的设置放在这里，相机不会在场景中显示 -->
+                <PerspectiveCamera
+                    Position="108.7, 409.3, 0.4"
+                    LookDirection="-0.21,-0.89,-0.09"
+                    UpDirection="0,1,0"
+                    NearPlaneDistance="0.02"
+                    FarPlaneDistance="990000"
+                    FieldOfView="45">
+                </PerspectiveCamera>
+            </Viewport3D.Camera>
+            <ModelVisual3D>
+                <ModelVisual3D.Content>
+                    <Model3DGroup>
+                        <!-- 场景中的物体模型和光源在这里设置 -->
+                        <!--泛光，场景中所有面颜色相同，这里未使用泛光-->
+                        <!--<AmbientLight Color="White"></AmbientLight>-->
+                        <!--方向光，颜色为白光 direction表示光照方向，对应x,y,z坐标-->
+                        <DirectionalLight Color="#FFFFFF" Direction="1, -1, -1"></DirectionalLight>
+                        <Model3DGroup x:Name="StuffOnTurntable">
+                            <!--金字塔几何体模型-->
+                            <GeometryModel3D
+                                Geometry="{StaticResource RSRCmeshPyramid}"
+                                Material="{StaticResource RSRCmaterialFront}">
+                            </GeometryModel3D>
+                            <!--旋转变换，沿y轴旋转，初始角度为0-->
+                            <Model3DGroup.Transform>
+                                <Transform3DGroup>
+                                    <RotateTransform3D>
+                                        <RotateTransform3D.Rotation>
+                                            <AxisAngleRotation3D x:Name='yAxisRotate'
+                                                           Axis='0,1,0'
+                                                           Angle='0'/>
+                                        </RotateTransform3D.Rotation>
+                                    </RotateTransform3D>
+                                </Transform3DGroup>
+                            </Model3DGroup.Transform>
+                        </Model3DGroup>
+                    </Model3DGroup>
+                </ModelVisual3D.Content>
+            </ModelVisual3D>
+        </Viewport3D>
+    </Page>
+</Page>

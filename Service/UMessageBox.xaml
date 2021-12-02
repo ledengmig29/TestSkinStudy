@@ -1,0 +1,72 @@
+﻿<Window x:Class="ListViewData.Service.UMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListViewData.Service"
+        mc:Ignorable="d"
+        Title="提示" Height="150" Width="300" WindowStyle="None"   Background="{x:Null}" ResizeMode="NoResize"
+        x:Name="umb" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded" >
+            <BeginStoryboard>
+                <Storyboard Name="sbOpShow">
+                    <DoubleAnimation  Storyboard.TargetName="umb" Storyboard.TargetProperty="Opacity" From="0" To="0.8" Duration="0:0:0.15"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Window.Resources>
+        <ControlTemplate x:Key="ButtonControlTemplate1" TargetType="{x:Type Button}">
+            <Grid>
+                <Border x:Name="border" CornerRadius="3" BorderBrush="{DynamicResource MainBackgroundMid}" Background="#A2B5CD" BorderThickness="1">
+                    <TextBlock x:Name="textBlock" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Foreground="White"/>
+                </Border>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="textBlock" Property="Foreground" Value="White" />
+                    <Setter TargetName="border" Property="Background" Value="#FF1ACC60" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Border Height="Auto" Background="#6C7B8B" Opacity="1" CornerRadius="3">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="*" MinHeight="80"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border  Height="25" Width="{Binding ElementName=main, Path=Width,UpdateSourceTrigger=PropertyChanged}" BorderThickness="0,0,0,1" BorderBrush="#FFA6F5B8" Grid.Row="0"  MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Row="0" x:Name="icon" Source="/ListViewData;component/images/m_message.png" Height="22" HorizontalAlignment="Center" VerticalAlignment="Center" ></Image>
+                    <TextBlock x:Name="title" Text="提示" HorizontalAlignment="Left"  FontSize="15" VerticalAlignment="Bottom" Margin="5,0,0,2" Grid.Column="1" Foreground="White" Width="270"/>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1">
+                <TextBlock  Foreground="White" Margin="10,15,10,5" x:Name="tipContent" FontSize="14" TextWrapping="Wrap" Height="auto"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="2" x:Name="yesno" Visibility="Collapsed" Height="40" Margin="0,3,0,0">
+                <StackPanel Height="30" Orientation="Horizontal">
+                    <Button Height="25" Width="60" VerticalAlignment="Center" Margin="70,2,0,2" Content="是" Template="{StaticResource ButtonControlTemplate1}" Click="Button_YES_Click"></Button>
+                    <Button Height="25" Width="60" VerticalAlignment="Center" Margin="40,2,0,2" Content="否" Template="{StaticResource ButtonControlTemplate1}" Click="Button_NO_Click"></Button>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" Height="40" x:Name="yes" Visibility="Collapsed" Margin="0,3,0,0">
+                <Button Height="25" Width="60" VerticalAlignment="Center" HorizontalAlignment="Center" Content="确定" Template="{StaticResource ButtonControlTemplate1}" Click="Button_YES_Click"></Button>
+            </Grid>
+            <Grid Grid.Row="2" x:Name="yesnocancel" Visibility="Visible" Height="40" Margin="0,3,0,0">
+                <StackPanel Height="30" Orientation="Horizontal" VerticalAlignment="Top" >
+                    <Button Height="25" Width="60" VerticalAlignment="Center" Margin="30,2,0,2" Content="是" Template="{StaticResource ButtonControlTemplate1}" Click="Button_YES_Click"></Button>
+                    <Button Height="25" Width="60" VerticalAlignment="Center" Margin="20,2,0,2" Content="否" Template="{StaticResource ButtonControlTemplate1}" Click="Button_NO_Click"></Button>
+                    <Button Height="25" Width="60" VerticalAlignment="Center" Margin="50,2,0,2" Content="取消" Template="{StaticResource ButtonControlTemplate1}" Click="Button_CANCEL_Click"></Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
