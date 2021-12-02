@@ -1,0 +1,14 @@
+﻿using ListViewData.Meta;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ListViewData.Common
+{
+    public class GlobalValues
+    {
+        public static UserData UserInfo { get; set; }
+    }
+}
